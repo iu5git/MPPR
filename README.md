@@ -3,6 +3,6 @@
 
 [Лабораторная работа №3](https://github.com/iu5git/MPPR/blob/main/notebooks/Lab3.ipynb)
 
-[Каталог для тестирования модели из лабораторной работы №3]()
+[Каталог для тестирования модели из лабораторной работы №3](https://github.com/iu5git/MPPR/tree/main/ONNX)
 
 Домашнее задание №3
