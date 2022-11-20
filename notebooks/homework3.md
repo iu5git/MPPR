@@ -6,7 +6,8 @@
 Для выполнения лабораторной работы потребуется [PyCharm Professional](https://www.jetbrains.com/pycharm/download/#section=windows//).
 
 Студенческую лицензию можно получить, указав бауманскую почту.
-## Часть 1
+
+## Часть 1. Сохранение модели в Google Colab
 ### Загрузка модели и ее экспорт в формат ONNX
 #### Шаг 1
 Откройте [Google colab](https://colab.research.google.com/) или создайте локальный ноутбук.
@@ -54,12 +55,15 @@ torch.onnx.export(model,  # модель
 					'output'  :  {0  :  'batch_size'}})
 ```
 
-## Часть 2
+## Часть 2. Web-приложение классификации изображений
 ### Создание web-приложения для классификации изображений полученного набора данных
+
 #### Шаг 1
 Пример создания проекта Django в IDE Pycharm можно просмотреть по данной [ссылке](https://github.com/iu5team/iu5web-fall-2021/blob/main/tutorials/lab4/lab4_tutorial.md#%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F-%D0%BF%D0%BE-%D0%B2%D1%8B%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8E-%D0%BB%D0%B0%D0%B1%D0%BE%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%BE%D0%B9-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B-4//).
+
 #### Шаг 2
 После создания проекта требуется создать в корне проекта папку media для последующего сохранения изображений и файлов формата ONNX. Внутри папки media необходимо создать папки "images" и "models".
+
 #### Шаг 3
 В файл setting.py требуется добавить пути к ранее созданной папке media. В самом конце необходимо добавить следующий блок кода:
 ```python
@@ -68,6 +72,7 @@ import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media')
 ```
+
 #### Шаг 4
 Добавить Python файл views.py в ту же папку, где был файл setting.py.
 
@@ -239,4 +244,4 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 Запустить проект, выполнив в терминале PyCharm следующую команду: "python3 manage.py runserver".
 
 #### Шаг 9
-Загрузить изображение и нажать на кнопку "submit".
+Загрузить изображение и нажать на кнопку `submit`.
