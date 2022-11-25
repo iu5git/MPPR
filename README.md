@@ -5,4 +5,6 @@
 
 [Каталог для тестирования модели из лабораторной работы №3](https://github.com/iu5git/MPPR/tree/main/ONNX)
 
+[Лабораторная работа №4](https://github.com/iu5git/MPPR/blob/main/notebooks/Lab4.ipynb)
+
 [Домашнее задание №3](https://github.com/iu5git/MPPR/blob/main/notebooks/homework3.md)
