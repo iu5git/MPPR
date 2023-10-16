@@ -24,7 +24,8 @@ const DOM = {
   imageRightShift: "right",
   imageDownShift: "down",
   histogramClasses: "histogram",
-  controlsGroup: "settings"
+  controlsGroup: "settings",
+  classControls: "class-settings"
 };
 
 const INSTRUCTION = {
@@ -175,6 +176,7 @@ find(DOM.modelFile).onchange = async function (event) {
     find(DOM.imageFile).value = "";
     find(DOM.cifarImage).parentElement.style.display = "none";
     find(DOM.controlsGroup).style.display = "none";
+    find(DOM.classControls).style.display = "none";
     find(DOM.resetBtn).click();
     find(DOM.headerText).textContent = INSTRUCTION.step1;
     return;
@@ -189,6 +191,7 @@ find(DOM.modelFile).onchange = async function (event) {
     const input = new onnx.Tensor(img, "float32", [1, 32, 32, 3]);
     const output = (await onnxSess.run([input])).get("output").data;
     find(DOM.imageFile).style.display = "block";
+    find(DOM.classControls).style.display = "block"
     find(DOM.headerText).textContent = INSTRUCTION.step2;
   };
   reader.readAsDataURL(file);
