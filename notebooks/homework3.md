@@ -178,7 +178,7 @@ def to_data_uri(pil_img):
  - Четный номер в списке группы - cifar100_mobile 
  - Нечетный номер в списке группы - cifar100_resnet
 ```python
-sess = onnxruntime.InferenceSession(r'C:\PRIS_DZ1\PRIS_DZ1\media\models\cifar100.onnx') #<-Здесь требуется указать свой путь к модели
+sess = onnxruntime.InferenceSession(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media\models\MODEL_NAME.onnx')) #<-Здесь требуется указать название модели вместо MODEL_NAME
 ```
 #### Шаг 5
 В файле urls.py требуется заменить содержимое на следующий блок кода:
