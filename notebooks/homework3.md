@@ -15,6 +15,7 @@
 Импортируем фреймворк.
 ```python
 import torch
+!pip install onnx
 ``` 
 #### Шаг 3
 Создаем девайс.
@@ -29,7 +30,7 @@ device = torch.device('cuda'  if torch.cuda.is_available()  else  'cpu')
 
 ```python
 model = torch.hub.load("chenyaofo/pytorch-cifar-models",
-	"cifar100_mobilenetv2_x0_5",
+	"cifar100_mobilenetv2_x1_0",
 	# 'cifar100_resnet20',
 	pretrained=True)
 ```
@@ -59,7 +60,34 @@ torch.onnx.export(model,  # модель
 ### Создание web-приложения для классификации изображений полученного набора данных
 
 #### Шаг 1
-Пример создания проекта Django в IDE Pycharm можно просмотреть по данной [ссылке](https://github.com/iu5team/iu5web-fall-2021/blob/main/tutorials/lab4/lab4_tutorial.md#%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F-%D0%BF%D0%BE-%D0%B2%D1%8B%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8E-%D0%BB%D0%B0%D0%B1%D0%BE%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%BE%D0%B9-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B-4//).
+Пример создания проекта Django в VS code
+
+Создаём папку, открываем её в VS code, далее на верхней панели терминал -> Создать терминал (либо сочетание клавиш Ctrl + Shift + `)
+
+* Создание виртуального окружения
+```bash
+python -m venv venv
+```
+
+* Активация виртуального окружения
+```bash
+.\venv\Scripts\activate
+```
+
+* Установка django
+```bash
+pip install django
+```
+
+* Создание django приложения
+```bash
+django-admin startproject project_name .
+```
+
+* Запуск django приложения
+```bash
+python manage.py runserver
+```
 
 #### Шаг 2
 После создания проекта требуется создать в корне проекта папку media для последующего сохранения изображений и файлов формата ONNX. Внутри папки media необходимо создать папки "images" и "models".
@@ -104,20 +132,21 @@ def predictImage(request):
   
 def predictImageData(modelName, filePath):  
     img = Image.open(filePath).convert("RGB")  
-    resized_img = img.resize((32, 32), Image.ANTIALIAS)  
+    resized_img = img.resize((32, 32), Image.LANCZOS)  
     img_uri = to_data_uri(resized_img)  
     input_image = Image.open(filePath)  
     preprocess = transforms.Compose([  
         transforms.Resize(32),  
-  transforms.CenterCrop(32),  
-  transforms.ToTensor(),  
-  transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),  
-  ])  
+        transforms.CenterCrop(32),  
+        transforms.ToTensor(),  
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),  
+    ])  
     input_tensor = preprocess(input_image)  
     input_batch = input_tensor.unsqueeze(0)  
-     
- sess = onnxruntime.InferenceSession(r'C:\PRIS_DZ1\PRIS_DZ1\media\models\cifar100.onnx') #<-Здесь требуется указать свой путь к модели  
-  outputOFModel = np.argmax(sess.run(None, {'input': to_numpy(input_batch)}))  
+
+    # Здесь требуется указать название модели вместо MODEL_NAME
+    sess = onnxruntime.InferenceSession(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media\models\MODEL_NAME.onnx'))
+    outputOFModel = np.argmax(sess.run(None, {'input': to_numpy(input_batch)}))  
     score = imageClassList[outputOFModel]  
   
     return score, img_uri  
@@ -132,7 +161,7 @@ def to_image(numpy_img):
 def to_data_uri(pil_img):  
     data = BytesIO()  
     pil_img.save(data, "JPEG")  # pick your format  
-  data64 = base64.b64encode(data.getvalue())  
+    data64 = base64.b64encode(data.getvalue())  
     return u'data:img/jpeg;base64,' + data64.decode('utf-8')
 ```
 
@@ -149,7 +178,7 @@ def to_data_uri(pil_img):
  - Четный номер в списке группы - cifar100_mobile 
  - Нечетный номер в списке группы - cifar100_resnet
 ```python
-sess = onnxruntime.InferenceSession(r'C:\PRIS_DZ1\PRIS_DZ1\media\models\cifar100.onnx') #<-Здесь требуется указать свой путь к модели
+sess = onnxruntime.InferenceSession(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media\models\MODEL_NAME.onnx')) #<-Здесь требуется указать название модели вместо MODEL_NAME
 ```
 #### Шаг 5
 В файле urls.py требуется заменить содержимое на следующий блок кода:
@@ -170,11 +199,18 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ```
 
 #### Шаг 6
-Установить следующие библиотеки: onnx, onnxruntime, numpy, pillow.
+Установить следующие библиотеки: onnx, onnxruntime, pillow, torchvision.
 Установить библиотеки можно в терминала PyCharm с помощью pip install [название библиотеки].
 
 #### Шаг 7
-В папку templates добавить файл scorepage.html.
+Создать папку templates в корне проекта, добавить в неё файл scorepage.html.
+Отредактировать файл settings.py, изменив в секции TEMPLATES массив DIRS.
+
+```python
+'DIRS': [
+            BASE_DIR / 'templates'
+        ],
+```
 
 ```html
 <!DOCTYPE html>  
@@ -241,7 +277,7 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 </html>
 ```
 #### Шаг 8
-Запустить проект, выполнив в терминале PyCharm следующую команду: "python3 manage.py runserver".
+Запустить проект, выполнив в терминале PyCharm следующую команду: "python manage.py runserver".
 
 #### Шаг 9
 Загрузить изображение и нажать на кнопку `submit`.
