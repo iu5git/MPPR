@@ -81,12 +81,12 @@ pip install django
 
 * Создание django приложения
 ```bash
-django-admin startproject project_name
+django-admin startproject project_name .
 ```
 
 * Запуск django приложения
 ```bash
-cd project_name && python manage.py runserver
+python manage.py runserver
 ```
 
 #### Шаг 2
@@ -137,15 +137,16 @@ def predictImageData(modelName, filePath):
     input_image = Image.open(filePath)  
     preprocess = transforms.Compose([  
         transforms.Resize(32),  
-  transforms.CenterCrop(32),  
-  transforms.ToTensor(),  
-  transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),  
-  ])  
+        transforms.CenterCrop(32),  
+        transforms.ToTensor(),  
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),  
+    ])  
     input_tensor = preprocess(input_image)  
     input_batch = input_tensor.unsqueeze(0)  
-     
- sess = onnxruntime.InferenceSession(r'C:\PRIS_DZ1\PRIS_DZ1\media\models\cifar100.onnx') #<-Здесь требуется указать свой путь к модели  
-  outputOFModel = np.argmax(sess.run(None, {'input': to_numpy(input_batch)}))  
+
+    # Здесь требуется указать название модели вместо MODEL_NAME
+    sess = onnxruntime.InferenceSession(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media\models\MODEL_NAME.onnx'))
+    outputOFModel = np.argmax(sess.run(None, {'input': to_numpy(input_batch)}))  
     score = imageClassList[outputOFModel]  
   
     return score, img_uri  
@@ -160,7 +161,7 @@ def to_image(numpy_img):
 def to_data_uri(pil_img):  
     data = BytesIO()  
     pil_img.save(data, "JPEG")  # pick your format  
-  data64 = base64.b64encode(data.getvalue())  
+    data64 = base64.b64encode(data.getvalue())  
     return u'data:img/jpeg;base64,' + data64.decode('utf-8')
 ```
 
@@ -198,16 +199,16 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ```
 
 #### Шаг 6
-Установить следующие библиотеки: onnx, onnxruntime, numpy, pillow.
+Установить следующие библиотеки: onnx, onnxruntime, pillow, torchvision.
 Установить библиотеки можно в терминала PyCharm с помощью pip install [название библиотеки].
 
 #### Шаг 7
-В папку templates добавить файл scorepage.html.
+Создать папку templates в корне проекта, добавить в неё файл scorepage.html.
 Отредактировать файл settings.py, изменив в секции TEMPLATES массив DIRS.
 
 ```python
 'DIRS': [
-            BASE_DIR / 'project_name/templates'
+            BASE_DIR / 'templates'
         ],
 ```
 
@@ -276,7 +277,7 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 </html>
 ```
 #### Шаг 8
-Запустить проект, выполнив в терминале PyCharm следующую команду: "python3 manage.py runserver".
+Запустить проект, выполнив в терминале PyCharm следующую команду: "python manage.py runserver".
 
 #### Шаг 9
 Загрузить изображение и нажать на кнопку `submit`.
