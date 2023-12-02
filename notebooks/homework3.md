@@ -72,6 +72,10 @@ import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media')
 ```
+и в TEMPLATES добавить
+```
+'DIRS': [os.path.join(BASE_DIR, 'templates')],
+```
 
 #### Шаг 4
 Добавить Python файл views.py в ту же папку, где был файл setting.py.
@@ -118,7 +122,7 @@ def predictImageData(modelName, filePath):
      
  sess = onnxruntime.InferenceSession(r'C:\PRIS_DZ1\PRIS_DZ1\media\models\cifar100.onnx') #<-Здесь требуется указать свой путь к модели  
   outputOFModel = np.argmax(sess.run(None, {'input': to_numpy(input_batch)}))  
-    score = imageClassList[outputOFModel]  
+    score = imageClassList.get(outputOFModel)  
   
     return score, img_uri  
   
@@ -226,7 +230,9 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
  </div> <input name="filePath" type="file"><br><br>  
  <input type="submit" value="Submit" >  
  </form> </div> <div> <br>  {% if scorePrediction %}  
-        <h3>The classification is : {{scorePrediction}}</h3>  
+        <h3>The classification is : {{scorePrediction}}</h3> 
+        {% else %}
+        <h3>This class isnt presented in your variant list</h3>
   {% endif %}  
   
     </div>  
