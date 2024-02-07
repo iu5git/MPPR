@@ -18,6 +18,8 @@
 
 [Каталог для тестирования модели из лабораторной работы №3](https://github.com/iu5git/MPPR/tree/main/ONNX)
 
+[Пример отчета](/docs/) по лабораторной №3
+
 ## Домашнее задание
 
 [Домашнее задание №3](https://github.com/iu5git/MPPR/blob/main/notebooks/homework3.md)
