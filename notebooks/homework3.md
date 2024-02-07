@@ -2,10 +2,6 @@
 ## Задание
 Необходимо создать web-приложение для классификации изображений с использованием предобученной модели на основе датасета cifar100. 
 
-## Установка IDE PyCharm Professional
-Для выполнения лабораторной работы потребуется [PyCharm Professional](https://www.jetbrains.com/pycharm/download/#section=windows//).
-
-Студенческую лицензию можно получить, указав бауманскую почту.
 
 ## Часть 1. Сохранение модели в Google Colab
 ### Загрузка модели и ее экспорт в формат ONNX
@@ -56,10 +52,15 @@ torch.onnx.export(model,  # модель
 ```
 
 ## Часть 2. Web-приложение классификации изображений
+
+## Установка IDE VS Code
+Для выполнения лабораторной работы потребуется [VS Code](https://code.visualstudio.com).
+
+
 ### Создание web-приложения для классификации изображений полученного набора данных
 
 #### Шаг 1
-Пример создания проекта Django в IDE Pycharm можно просмотреть по данной [ссылке](https://github.com/iu5team/iu5web-fall-2021/blob/main/tutorials/lab4/lab4_tutorial.md#%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F-%D0%BF%D0%BE-%D0%B2%D1%8B%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8E-%D0%BB%D0%B0%D0%B1%D0%BE%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%BE%D0%B9-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B-4//).
+Пример создания проекта Django в IDE VS Code можно просмотреть по данной [ссылке](https://github.com/iu5git/Web/blob/main/tutorials/lab1-py/lab1_tutorial.md).
 
 #### Шаг 2
 После создания проекта требуется создать в корне проекта папку media для последующего сохранения изображений и файлов формата ONNX. Внутри папки media необходимо создать папки "images" и "models".
