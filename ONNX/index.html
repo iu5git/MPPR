@@ -23,6 +23,11 @@
       text-align: 'center';
     }
 
+    .class-settings {
+      display: none;
+      margin-bottom: 10px;
+    }
+
     /* .modelFile {
       width: 0.1px;
       height: 0.1px;
@@ -62,14 +67,17 @@
       <p>
         <input type="file" class="imageFile" accept="image/*" hidden />
       </p>
-      <div class="settings" hidden>
+      <div class="class-settings">
         <label>Class label</label>
         <input type="number" class="labelId" min='0' max='99' value='0'/>
         <button class="add" />Add</button>
+        <span>(добавляем 3 штуки, а потом грузим картинку)</span>
+        <p class="N"></p>
+      </div>
+      <div class="settings" hidden>
         <button class="random" />10 Random</button>
         <button class="undo" />Undo</button>
         <button class="reset" />Reset</button>
-        <p class="N"></p>
       </div>
       <div hidden >
         <p>
