@@ -5,13 +5,13 @@
 
 ## Лекции
 
-1. [Лекция. Виды обучения, набор данных, метрики](https://www.youtube.com/watch?v=RkuP6N9Kk5k&list=PLLELLTvDgUQ_d9eUj_3XVpAdGByuU37kT&index=2)
+- [Плейлист](https://vk.com/video/playlist/-211704031_1) VK Видео по глубокому обучению
 
-2. [Лекция. Вычисления в нейронной сети, градиентный спуск, переобучение](https://www.youtube.com/watch?v=UQXQtg5nS2I&list=PLLELLTvDgUQ_d9eUj_3XVpAdGByuU37kT&index=3)
+1. [Лекция. Нейронная сеть, набор данных, метрики](https://vk.com/video-211704031_456239175)
 
-3. [Лекция. Короткий ролик - кратко все самое основное по нейронным сетям](https://www.youtube.com/watch?v=0K6O1E9SBO0&list=PLLELLTvDgUQ_d9eUj_3XVpAdGByuU37kT&index=1)
+2. [Лекция. Вычисления в нейронной сети, градиентный спуск, переобучение](https://vk.com/video-211704031_456239176)
 
-4. [Мастер-класс. Разбор задания лабораторной работы по шагам](https://www.youtube.com/watch?v=8WCNt0tK2tc&list=PLLELLTvDgUQ_d9eUj_3XVpAdGByuU37kT&index=5)
+3. [Мастер-класс. Разбор задания лабораторной работы по шагам](https://vk.com/video-211704031_456239183)
 
 ## Лабораторная работа
 [Лабораторная работа №3](https://github.com/iu5git/MPPR/blob/main/notebooks/Lab3.ipynb)
